@@ -1,18 +1,28 @@
-var request = new XMLHttpRequest();
 
-request.open('GET', 'https://api.adviceslip.com/advice');
+function getAdvice(){
+    var request = new XMLHttpRequest();
 
-request.onload = function() {
-    var response = request.response;
-    var jsonData = JSON.parse(response);
-    var advice = jsonData.slip.advice;
+    request.open('GET', 'https://api.adviceslip.com/advice');
 
-    document.getElementById("advice").innerHTML = advice;
-};
+    request.onload = function() {
+        var response = request.response;
+        var jsonData = JSON.parse(response);
+        var advice = jsonData.slip.advice;
 
-request.send();
+        document.getElementById("advice").innerHTML = advice;
+    };
+
+    request.send();
+}
+
+getAdvice();
 
 document.addEventListener('keyup', function(e){
     if(e.keyCode == 13)
-      window.location.reload();
+        getAdvice();
   })
+
+
+setInterval(function(){
+    getAdvice();
+},8000);
